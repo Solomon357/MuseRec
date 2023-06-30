@@ -1,4 +1,5 @@
 //import authentification from firebase
+import { Button, Container, HStack, Heading, Input } from "@chakra-ui/react";
 import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useState } from "react";
@@ -48,24 +49,29 @@ const Auth = () => {
     };
 
     return ( 
-        <div className="authentification">
-            <input 
+
+        <Container className="authentification" m="20px">
+            <Heading size={"sm"}>Sign In</Heading>
+
+            <Input 
             placeholder="Insert Email"
             onChange={(e) => setUserEmail(e.target.value)}
             />
-            <input 
+            <Input 
             placeholder="Insert Password"
             type="password"
             onChange={(e) => setUserPassword(e.target.value)}
             />
 
-            <button className="submit" onClick={signIn}>Sign in</button>
+            <HStack spacing={3}>
+                <Button size={"xs"} className="submit" onClick={signIn}>Sign in</Button>
 
-            <button className="submit" onClick={signInWithGoogle}>Sign in With Google</button>
+                <Button size={"xs"} className="submit" onClick={signInWithGoogle}>Sign in With Google</Button>
 
-            <button className="submit" onClick={logOut}>Log out</button>
+                <Button size={"xs"} className="submit" onClick={logOut}>Log out</Button>
+            </HStack>
 
-        </div>
+        </Container>
      );
 }
  
