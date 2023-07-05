@@ -8,15 +8,17 @@ const Navbar = () => {
     
     return ( 
         <Flex as={"nav"} bg={"orange"} p={"10px"}>
-            <Heading>MuseRec</Heading>
-            <Text size={"xs"}>ver 0.0.3</Text>
+            <Heading>Muse
+                <Heading as={"span"} color={"white"}>Rec</Heading>
+            </Heading>
+            <Text size={"xs"}>ver 0.0.4</Text>
 
             <Spacer />
             <HStack gap={4}>
                 <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("/")}>Home</Button>
-                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("/sign-in")}>Sign in</Button>
-                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("/create")}>Create</Button>
-                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("/songlist")}>SongList</Button>
+                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("sign-in")}>Sign in</Button>
+                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("create")}>Create</Button>
+                <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("songlist")}>SongList</Button>
             </HStack>
         </Flex>
      );

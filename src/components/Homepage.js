@@ -1,19 +1,22 @@
 import { Box, Container, Heading, Text, VStack, Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
+
+    const navigate = useNavigate();
     
     return (
-        <Container >
-            <Heading size={"xl"} p={"20px"} textAlign={"center"}>Homepage</Heading>
+        <Container textAlign={"center"} >
+            <Heading size={"xl"} p={"20px"}>Homepage</Heading>
             
-            <Box textAlign={"center"} my={"40px"}>
+            <Box my={"40px"}>
                 <Text fontSize={"xl"} mb={"20px"}>Welcome to MuseRec!</Text>
                 <Text fontSize={"xl"}>How would you like your songs recommended?</Text>
             </Box>
 
-            <VStack alignItems={"center"} spacing={4}>
-                <Button size={"lg"} width={"100%"} >Search by Song</Button>
-                <Button size={"lg"} width={"100%"} >Search by Song Attributes</Button>
+            <VStack spacing={4}>
+                <Button size={"lg"} width={"100%"} onClick={()=> navigate("by-song")}>Search by Song</Button>
+                <Button size={"lg"} width={"100%"} onClick={()=> navigate("attribute")}>Search by Song Attributes</Button>
             </VStack>
         </Container>
      );

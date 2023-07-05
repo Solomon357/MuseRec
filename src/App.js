@@ -1,60 +1,45 @@
-//import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, 
+  Route, 
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom';
+
+//pages
 import Auth from './components/Auth';
-import Navbar from './components/Navbar';
 import Create from './components/Create';
 import SongList from './components/Songlist';
 import Homepage from './components/Homepage';
-//import { storage } from './config/firebase';
-//import { ref, uploadBytes } from 'firebase/storage';
-import { Box, Container, Input } from '@chakra-ui/react';
+import SongResults from './components/resultpages/BySongResults';
+import AttributeResults from './components/resultpages/AttributeResults';
 
+//controls the journey of the pages
+import RootLayout from './layouts/RootLayout';
+import AttributeLayout from './layouts/AttributeLayout';
+import BySongLayout from './layouts/BySongLayout';
+import NotFound from './components/NotFound';
 
-
-
+//BrowserRouter element needs to be created OUTSIDE the App function
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}> 
+      <Route index element={<Homepage />}/>
+      <Route path="sign-in" element={<Auth />} />
+      <Route path="create" element ={<Create />} />
+      <Route path ="songlist" element ={<SongList />} />     
+      <Route path ="attribute" element ={<AttributeLayout />}>
+        <Route path = "attribute-results" element={<AttributeResults />} />
+      </Route>
+      <Route path ="by-song" element ={<BySongLayout />} >
+        <Route path= "by-song-results" element={<SongResults />} />
+      </Route>
+      <Route path ="*" element={<NotFound />} />      
+    </Route>
+  )
+)
 
 function App() {
-  //useState for file upload
-  // const [fileUpload, setFileUpload] = useState(null);
-
-
-  // const uploadFile = async() =>{
-  //   if (!fileUpload) return;
-  //   const filesFolderRef = ref(storage, `testfiles/${fileUpload.name}`);
-  //   try{
-  //     await uploadBytes(filesFolderRef, fileUpload);
-  //   } catch(err){
-  //     console.error(err);
-  //   } 
-  // };
-
-
-  return (
-    <Router>
-      <Box as={"main"} className="app">
-
-        <Navbar />
-
-          <Routes>
-            <Route exact path="/" element={<Homepage />}/>
-            <Route exact path="/sign-in" element={<Auth />} />
-            <Route exact path="/create" element ={<Create />} />
-            <Route exact path ="/songlist" element ={<SongList />} />      
-          </Routes>
-
-          {/* <div className='file upload'>
-            <input type="file" 
-              onChange={(e) => setFileUpload(e.target.files[0])} 
-            />
-
-            <button onClick={uploadFile}>Upload file</button>
-          </div> */}
-      </Box>
-
-
-
-    </Router>
-
+  return ( 
+    <RouterProvider router={router}/>
   );
 }
 
