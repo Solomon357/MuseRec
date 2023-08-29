@@ -1,4 +1,4 @@
-import { Box, Heading, Container, VStack, Button, HStack, Divider, RadioGroup, Radio } from "@chakra-ui/react";
+import { Box, Heading, Container, VStack, Button, HStack, Divider, RadioGroup, Radio, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const AttributeLayout = () => {
             
             <VStack gap={5}>
                 <Heading as={"h2"} size={"lg"}>Mood</Heading> 
-
+                <Text>{mood}</Text>
                 <RadioGroup colorScheme="brand" size={"xl"} onChange={setMood} value={mood}>
                     <HStack gap={3} wrap={"wrap"}>
                         <Radio value={"happy"}>Happy</Radio>
@@ -28,8 +28,9 @@ const AttributeLayout = () => {
 
                 <Divider />
 
-                <Heading size={"lg"}>Genre</Heading> 
+                <Heading size={"lg"}>Genre</Heading>
 
+                <Text>{genre}</Text>
                 <RadioGroup colorScheme="brand" size={"xl"} onChange={setGenre} value={genre}>
                     <HStack gap={3} wrap={"wrap"}>
                         <Radio value={"pop"}>Pop</Radio>

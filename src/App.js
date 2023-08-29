@@ -4,10 +4,13 @@ import { createBrowserRouter,
   RouterProvider
 } from 'react-router-dom';
 
+
 //pages
-import Auth from './components/Auth';
-import Create from './components/Create';
-import SongList from './components/Songlist';
+
+//* commented out pages will be functionality that needs to be reimagined *
+//import Auth from './components/Auth';
+// import Create from './components/Create';
+// import SongList from './components/Songlist';
 import Homepage from './components/Homepage';
 import SongResults from './components/resultpages/BySongResults';
 import AttributeResults from './components/resultpages/AttributeResults';
@@ -23,9 +26,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}> 
       <Route index element={<Homepage />}/>
-      <Route path="sign-in" element={<Auth />} />
-      <Route path="create" element ={<Create />} />
-      <Route path ="songlist" element ={<SongList />} />     
+      {/* <Route path="sign-in" element={<Auth />} /> */}
+      {/* <Route path="create" element ={<Create />} />
+      <Route path ="songlist" element ={<SongList />} />      */}
       <Route path ="attribute" element ={<AttributeLayout />}>
         <Route path = "attribute-results" element={<AttributeResults />} />
       </Route>
