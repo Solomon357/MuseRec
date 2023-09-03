@@ -173,8 +173,8 @@ const Auth = () => {
     const signIn = async () =>{
         //when dealing with async and things like promises should always be handling errors as you go
         try{
-        //this method takes in the auth and whatever you want authenticated as parameters
-        await createUserWithEmailAndPassword(auth, userEmail, userPassword);
+            //this method takes in the auth and whatever you want authenticated as parameters
+            await createUserWithEmailAndPassword(auth, userEmail, userPassword);
         } catch(err){
             console.error(err);
         }
@@ -183,8 +183,8 @@ const Auth = () => {
     const signInWithGoogle = async () =>{
         //when dealing with async and things like promises should always be handling errors as you go
         try{
-        //this method takes in the auth and whatever you want authenticated as parameters
-        await signInWithPopup(auth, googleProvider);
+            //this method takes in the auth and whatever you want authenticated as parameters
+            await signInWithPopup(auth, googleProvider);
         } catch(err){
             console.error(err);
         }
@@ -195,8 +195,8 @@ const Auth = () => {
     const logOut = async () =>{
         //when dealing with async and things like promises should always be handling errors as you go
         try{
-        //this method takes in the auth and whatever you want authenticated as parameters
-        await signOut(auth);
+            //this method takes in the auth and whatever you want authenticated as parameters
+            await signOut(auth);
         } catch(err){
             console.error(err);
         }

@@ -1,15 +1,20 @@
-import { Box, Button, Collapse, Flex, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Collapse, Flex, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, Image } from "@chakra-ui/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const AttributeResults = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const songs = location.state.songOutput;
 
     const [show, setShow] = useState(false)
 
     const handleToggle = () => setShow(!show)
+
+    console.log("attribute recommended songs in a different component")
+    console.log(songs);
 
     return ( 
         <Box>
@@ -25,57 +30,14 @@ const AttributeResults = () => {
                         </Tr>
                         </Thead>
                         <Tbody>
-                        <Tr>
-                            <Td>Song#1</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#2</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>2.1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#3</Td>
-                            <Td>Metal</Td>
-                            <Td isNumeric>3.91</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#4</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#5</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>2.1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#6</Td>
-                            <Td>Metal</Td>
-                            <Td isNumeric>3.91</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#7</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#8</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>2.1</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#9</Td>
-                            <Td>Metal</Td>
-                            <Td isNumeric>3.91</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Song#10</Td>
-                            <Td>Rock</Td>
-                            <Td isNumeric>1</Td>
-                        </Tr>
-                        
+                            {songs.map((song, i) =>(
+                                <Tr key={i}>
+                                    <Td>{song.name}</Td>
+                                    <Td> <Image src={song.album.images[2].url}/></Td>
+                                    <Td isNumeric>{song.popularity}</Td>
+                                </Tr>
+
+                            ))}
                         </Tbody>
                         <Tfoot>
                         <Tr>

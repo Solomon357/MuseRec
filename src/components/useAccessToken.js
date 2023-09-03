@@ -51,7 +51,7 @@ const useAccessToken = () => {
 
             fetchData();
         
-    }, []);
+    }, [creds.client_id, creds.client_secret]);
 
     return accessToken;
 }

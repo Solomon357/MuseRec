@@ -21,6 +21,8 @@ import AttributeLayout from './layouts/AttributeLayout';
 import BySongLayout from './layouts/BySongLayout';
 import NotFound from './components/NotFound';
 
+
+
 //BrowserRouter element needs to be created OUTSIDE the App function
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,7 +44,7 @@ const router = createBrowserRouter(
 
 function App() {
   return ( 
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   );
 }
 

@@ -1,52 +1,27 @@
 import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
-
-
-//show secret for the purposes of this tutorial only
-
-//see if i can put these credentials as a seperate file 
-// so i can pass the creds as a prop to any component that needs them
-const credentials = {
-    client_id: 'efe3ac326230422785eca822336069d9',
-    client_secret: '110bc2e445a44599919b66cd3805a675',
- }
+import useAccessToken from "../components/useAccessToken";
 
 const BySongLayout = () => {
     const navigate = useNavigate();
-
-    //useStates
-    const [searchInput, setSongInput] = useState("");
-    const [accessToken, setAccessToken] = useState("");
-    const [selectedTrackID, setSelectedTrackID] = useState("");
-
-    //this use state is the data coming in from the spotify app
-    const [tracks, setTracks] = useState([]);  
     
+
+    //states + useStates
+    const accessToken = useAccessToken(); 
+    
+    const [searchInput, setSongInput] = useState("");
+    const [selectedTrackID, setSelectedTrackID] = useState("");
+    //this use state is for data coming in from the spotify app
+    const [tracks, setTracks] = useState([]);  
     //use state to store the 10 recommended songs into  
     const [recommendedSongs, setRecommendedSongs] = useState([]);    
-
-    //useEffect for spotify
-    useEffect(() => {
-        //need some params before we can get the token
-        let authParams = {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded'
-            },
-            body: 'grant_type=client_credentials&client_id='+ credentials.client_id + '&client_secret='+ credentials.client_secret
-        }
-        //api Access Token
-        fetch("https://accounts.spotify.com/api/token", authParams)
-            .then(res => res.json())
-            .then(data => setAccessToken(data.access_token))
-            .catch(error => console.log(error))
-    }, [])
 
     // Search function 
     const search = async () => {
         //just to check that search input is being saved
         console.log("Searching for "+ searchInput)
+        console.log("state of accessToken in search "+accessToken)
 
         //Get request using search to get the Artist ID
 
@@ -58,6 +33,7 @@ const BySongLayout = () => {
                 'Authorization': 'Bearer ' + accessToken
             }
         } 
+
         // we use the search end point to get the id of one element
         //search with spotify api always returns the 20 most relevant items if you dont specify a limit
         let returnedTracks = await fetch('https://api.spotify.com/v1/search?q='+ searchInput +'&type=track', accessParams)
@@ -135,10 +111,12 @@ const BySongLayout = () => {
         )
       }
 
+
     //recommender function 
     const getRecommendations = async () => {
         //just to check that search input is being saved
         console.log("Recommendations for "+ selectedTrackID)
+        console.log("state of accessToken in recommender "+ accessToken)
 
         //first we need the parameters that we grab from my search page
         let accessParams = {
@@ -165,6 +143,8 @@ const BySongLayout = () => {
         navigate("by-song-results", {state:{songOutput: recommendedSongs}});
         
     }
+    
+    //STATE CHECKS
     // console.log("state of tracks array "+ tracks) // end state should be an array of tracks from search
     // console.log("Selected track id= "+ selectedTrackID) // value should be trackID every render
     //console.log(recommendedSongs) // end state should be an array of recommended tracks 

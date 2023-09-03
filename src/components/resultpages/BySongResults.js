@@ -7,13 +7,12 @@ const SongResults = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    //const [songOutput, setSongOutput] = useState([]);
     const songs = location.state.songOutput; 
     const [show, setShow] = useState(false);
 
     const handleToggle = () => setShow(!show)
 
-    console.log("below is recommended songs in a different component")
+    console.log("below is recommended songs in a different component");
     console.log(songs);
 
     return (
