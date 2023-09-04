@@ -10,11 +10,12 @@ const AttributeLayout = () => {
     const navigate = useNavigate();
     //token uses custom hook in order to gain implicit grant from spotify 
     const accessToken = useAccessToken();
-    const [genres, setGenres] = useState(null);
+    const [genreArray, setGenreArray] = useState(null);
     const [genreValues, setGenreValues] = useState(null); 
-    const [recommendedSongs, setRecommendedSongs] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const genreOptions = [];
+
+    
     
     //test for token
     //console.log("check for access token "+accessToken) // => accessToken = string
@@ -39,7 +40,7 @@ const AttributeLayout = () => {
             })
             .catch(error => console.log(error));
 
-        setGenres(returnedGenres);
+        setGenreArray(returnedGenres);
     }
 
     //only call this function once the token has a value
@@ -49,9 +50,10 @@ const AttributeLayout = () => {
     }
 
     //converting genres array to an array of objects once genres has data
-    genres && genres.map((genre) => (
+    genreArray && genreArray.map((genre) => (
         genreOptions.push({value:genre, label: genre})
     ));
+
 
     //checking genre states
     //console.log(genres);  Array(126)
@@ -69,11 +71,13 @@ const AttributeLayout = () => {
         // console.log("handleChange: ", selectedOption); // => [{...}]
     }
 
-    const getRecommendations = async() =>{
+    const getRecommendations = async() => {
+        //e.preventDefault();
         //checking that we have genreValue State
         console.log("Recommendations for "+ genreValues);
-
-        //first we need the parameters that we grab from my search page
+    
+    
+        //parameters that give us access to spotify API
         let accessParams = {
             method: "GET",
             headers: {
@@ -82,41 +86,45 @@ const AttributeLayout = () => {
             }
         } 
 
-        //run recommender api call with the track artist, genre and trackID (might only need track ID)
+        //run recommender api call with the genreValues
         let recommendedTracks = await fetch('https://api.spotify.com/v1/recommendations?seed_genres='+ genreValues +'&limit=10', accessParams)
             .then(response => response.json())
-            //console logging api requests is very useful for understanding the path i need for specific data
+            
             //returning data.tracks to recommendedTracks variable
-            .then(data => { return data.tracks }) // => Array(10) [{...},{...}]
+            .then(data => { 
+                //console.log(data.tracks)
+                return data.tracks}) // => Array(10) [{...},{...}]
             .catch(error => console.log(error))
 
-        setRecommendedSongs(recommendedTracks)
 
         //check that recommendedSongs has the right value
-        console.log(recommendedSongs)
+        console.log(recommendedTracks)
 
         //once we have the data for the recommended songs we navigate to the child component
-        navigate("attribute-results", {state:{songOutput: recommendedSongs}});        
+        navigate("attribute-results", {state:{songOutput: recommendedTracks}});        
     }
 
     return ( 
         <Container textAlign={"center"} maxW={"3xl"}>
             <Heading mb={"50px"}>Search by Attributes</Heading>
-            {genreOptions && 
-            <FormControl>
-                <Text>genre values is: {genreValues}</Text>
-                <Select 
-                    options={genreOptions}  
-                    placeholder="Please Select Genre..."
-                    onChange={handleChange}
-                    isMulti
-                    />
-            </FormControl>}
-
-            {/* im sure we can struct this better with more understanding of Form element*/}
             <Form onSubmit={getRecommendations}>
+                {genreOptions && 
+                <FormControl>
+                    <Text>genre values is: {genreValues}</Text>
+                    <Select 
+                        options={genreOptions}  
+                        placeholder="Please Select Genre..."
+                        onChange={handleChange}
+                        isMulti
+                        />
+                </FormControl>}
+
+                {/* im sure we can struct this better with more understanding of Form element*/}
+                
                 <Button type="submit">Get Recommended Songs</Button>
             </Form>
+
+
             <Box as="main">
                 <Outlet />
             </Box>
