@@ -1,29 +1,26 @@
-import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid } from "@chakra-ui/react";
+import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
 
-const BySongLayout = () => {
-  const navigate = useNavigate();
-  
 
+const BySongLayout = () => {
+
+  const navigate = useNavigate();
   //states + useStates
   const accessToken = useAccessToken(); 
   
   const [searchInput, setSongInput] = useState("");
   const [selectedTrackID, setSelectedTrackID] = useState("");
-  //this use state is for data coming in from the spotify app
   const [tracks, setTracks] = useState([]);    
 
-  // Search function 
+
   const search = async () => {
     //just to check that search input is being saved
     console.log("Searching for "+ searchInput)
     console.log("state of accessToken in search "+accessToken)
 
-    //Get request using search to get the Artist ID
-
-    //first we need the parameters that we grab from my search page
+    //first we get the parameters needed to initiate a search
     let accessParams = {
       method: "GET",
       headers: {
@@ -33,45 +30,53 @@ const BySongLayout = () => {
     } 
 
     // we use the search end point to get the id of one element
-    //search with spotify api always returns the 20 most relevant items if you dont specify a limit
+    //search request with spotify api always returns the 20 most relevant items if you dont specify a limit
     let returnedTracks = await fetch('https://api.spotify.com/v1/search?q='+ searchInput +'&type=track', accessParams)
       .then(response => response.json())
-      //console logging api requests is very useful for understanding the path i need for specific data
+      //console logging api requests is very useful for debugging
       .then(data => { return data.tracks.items })
       .catch(error => console.log(error))
 
     setTracks(returnedTracks);
+    
     //check for structure of tracks usestate
     // console.log(tracks) => this will return nothing cus useState is async but results are deffo there
   }
 
   //this RadioGroup function will encapsulate all the functionality that governs the custom radio 
-  // (double click bug issue might be located here)
   function CustomRadioGroup() {
     function CustomRadio(props) {
-      const { image, ...radioProps } = props
+      const { image, title, albumName, artistName, ...radioProps } = props
       const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
         useRadio(radioProps)
+      
         
       //the design for a single custom radio button
       return (
         //Box has to be a "label" for this to work
-        <Box as="label" {...htmlProps} cursor='pointer'>
+        <chakra.label {...htmlProps} cursor='pointer'>
           <input {...getInputProps({})} hidden />
-          <Box
-            {...getRadioProps()}
-            bg={state.isChecked ? 'orange.200' : 'transparent'}
-            w={'150px'}
+          <Flex
+            bg={state.isChecked ? 'orange.200' : 'gray.200'}
+  
             p={'3px'}
             borderRadius={'md'}
+            
             _hover={{
               boxShadow: " 0px 8px 23px #DAE0F9",
               outline: "solid 1px #BFC8E6",
             }}
+            
+            {...getRadioProps()}
           >
-            <Image src={image} borderRadius={'md'} {...getLabelProps()} />
-          </Box>
-        </Box>
+            <Image src={image} borderRadius={'md'}mr={'5px'} {...getLabelProps()} />
+            <Box textAlign={'left'}>
+              <Heading size={'sm'} mb={'3px'}> {title} </Heading>
+              <Text fontSize={'sm'}> Album: {albumName === title ? 'Single' : albumName}</Text>
+              <Text fontSize={'sm'}> By: {artistName}</Text>
+            </Box>
+          </Flex>
+        </chakra.label>
       )
     }
     
@@ -79,7 +84,7 @@ const BySongLayout = () => {
       setSelectedTrackID(value);
       console.log(`The value is ${value}!`);   
     }
-
+  
     const { value, getRadioProps, getRootProps } = useRadioGroup({
       name: "track-input",
       //defaultValue: tracks[0].id,
@@ -90,17 +95,19 @@ const BySongLayout = () => {
     return (
       <Stack {...getRootProps()}>
         <Text>The selected radio id is: {value}</Text>
-        <SimpleGrid spacing={'4px'} columns={'4'}>
+        <SimpleGrid spacing={'6px'} columns={{base:1,  sm:2, md:3}}>
           {tracks.map((track) => {
             return (
-              <Box key={track.id}>
-                <CustomRadio
-                  key={track.id}
-                  image={track.album.images[0].url}
-                  {...getRadioProps({ value: track.id })}
-                />
-                {track.name}
-              </Box>
+              <CustomRadio
+                key={track.id}
+                image={track.album.images[2].url}
+                {...getRadioProps({ value: track.id })}
+                title = {track.name}
+                albumName = {track.album.name}
+                artistName = {track.artists.map((artist, i) =>(
+                  artist.name + ((i !== track.artists.length-1) ? ', ' : '')
+                ))}
+              />
             )
           })}
         </SimpleGrid>
@@ -137,7 +144,7 @@ const BySongLayout = () => {
     console.log(recommendedTracks)
 
     //once we have the data for the recommended songs we navigate to the child component
-    navigate("by-song-results", {state:{songOutput: recommendedTracks}});
+    navigate("by-song-results", {state:{songOutput: recommendedTracks, access_token: accessToken}});
       
   }
   
@@ -146,14 +153,14 @@ const BySongLayout = () => {
   // console.log("Selected track id= "+ selectedTrackID) // value should be trackID every render 
 
   return ( 
-    <Container textAlign={"center"} maxW={"3xl"}>
+    <Container textAlign={"center"} maxW={"5xl"}>
       <Heading>Search by Song</Heading>
 
       <FormControl my={"40px"} isRequired >
-        <FormLabel>Find Song</FormLabel>
+        <FormLabel>Find Songs</FormLabel>
         <Input 
           type="search" 
-          placeholder="Search for Song" 
+          placeholder="Search for Songs!" 
           maxW={"70%"}
           onKeyUp={(e) => {
               if (e.key === "Enter"){

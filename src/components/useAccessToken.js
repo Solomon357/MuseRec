@@ -41,7 +41,7 @@ const useAccessToken = () => {
                 })
                 .catch(error => {
                     if (error.name === "AbortError"){
-                        console.log("fetch aborted");
+                        throw("fetch aborted");
                     }
                 })
 

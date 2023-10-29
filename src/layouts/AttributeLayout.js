@@ -50,10 +50,11 @@ const AttributeLayout = () => {
     }
 
     //converting genres array to an array of objects once genres has data
-    genreArray && genreArray.map((genre) => (
-        genreOptions.push({value:genre, label: genre})
-    ));
-
+    if(genreArray !== null){
+        genreArray.map((genre) => (
+            genreOptions.push({value:genre, label: genre})
+        ));
+    } 
 
     //checking genre states
     //console.log(genres);  Array(126)
@@ -72,7 +73,6 @@ const AttributeLayout = () => {
     }
 
     const getRecommendations = async() => {
-        //e.preventDefault();
         //checking that we have genreValue State
         console.log("Recommendations for "+ genreValues);
     
@@ -105,7 +105,7 @@ const AttributeLayout = () => {
     }
 
     return ( 
-        <Container textAlign={"center"} maxW={"3xl"}>
+        <Container textAlign={"center"} maxW={"5xl"}>
             <Heading mb={"50px"}>Search by Attributes</Heading>
             <Form onSubmit={getRecommendations}>
                 {genreOptions && 
@@ -119,7 +119,7 @@ const AttributeLayout = () => {
                         />
                 </FormControl>}
 
-                {/* im sure we can struct this better with more understanding of Form element*/}
+                {/* im sure i can structure this better with more understanding of Form element*/}
                 
                 <Button type="submit">Get Recommended Songs</Button>
             </Form>
