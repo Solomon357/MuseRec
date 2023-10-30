@@ -15,7 +15,7 @@ const Navbar = () => {
             <Heading>Muse
                 <Heading as={"span"} color={"white"}>Rec</Heading>
             </Heading>
-            <Text size={"xs"}>ver 0.0.4</Text>
+            <Text size={"xs"}>ver 0.1.0</Text>
 
             <Spacer />
             <HStack gap={4}>
