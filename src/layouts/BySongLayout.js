@@ -58,7 +58,9 @@ const BySongLayout = () => {
           <input {...getInputProps({})} hidden />
           <Flex
             bg={state.isChecked ? 'orange.200' : 'gray.200'}
-  
+            w={'326px'}
+            h={'90px'}
+            overflow={'auto'}
             p={'3px'}
             borderRadius={'md'}
             
@@ -87,7 +89,6 @@ const BySongLayout = () => {
   
     const { value, getRadioProps, getRootProps } = useRadioGroup({
       name: "track-input",
-      //defaultValue: tracks[0].id,
       onChange: handleChange,
       value: selectedTrackID,
     })
@@ -153,7 +154,7 @@ const BySongLayout = () => {
   // console.log("Selected track id= "+ selectedTrackID) // value should be trackID every render 
 
   return ( 
-    <Container textAlign={"center"} maxW={"5xl"}>
+    <Container textAlign={"center"} maxW={'5xl'}>
       <Heading>Search by Song</Heading>
 
       <FormControl my={"40px"} isRequired >
