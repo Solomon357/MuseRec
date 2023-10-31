@@ -38,8 +38,11 @@ const AttributeResults = () => {
                                         <Text key={artist.id}> {artist.name + ((i !== song.artists.length-1) ? ', ' : '')} </Text>
                                         ))}
                                     </Td>
-                                    <Td> <audio controls> 
-                                        <source src={song.preview_url} type="audio/mpeg" />Your browser does not support</audio>
+                                    <Td>{((song.preview_url) ? 
+                                        <audio controls> 
+                                            <source src={song.preview_url} type="audio/mpeg" /> Sorry! Your browser does not support
+                                        </audio>
+                                        : <p> Sorry! Preview not available :&#40; </p>)}
                                     </Td>
                                 </Tr>
                             ))}

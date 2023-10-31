@@ -1,7 +1,6 @@
 import { Box, Heading, Link } from "@chakra-ui/react";
 
 const NotFound = () => {
-
   return ( 
       <Box>
       <Heading>Page Not Found</Heading>
@@ -9,5 +8,4 @@ const NotFound = () => {
       </Box> 
     );
 }
- 
 export default NotFound;

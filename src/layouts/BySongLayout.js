@@ -3,9 +3,7 @@ import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
 
-
 const BySongLayout = () => {
-
   const navigate = useNavigate();
   //states + useStates
   const accessToken = useAccessToken(); 
@@ -49,9 +47,8 @@ const BySongLayout = () => {
       const { image, title, albumName, artistName, ...radioProps } = props
       const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
         useRadio(radioProps)
-      
         
-      //the design for a single custom radio button
+      //Design for a single custom radio button
       return (
         //Box has to be a "label" for this to work
         <chakra.label {...htmlProps} cursor='pointer'>
@@ -68,7 +65,6 @@ const BySongLayout = () => {
               boxShadow: " 0px 8px 23px #DAE0F9",
               outline: "solid 1px #BFC8E6",
             }}
-            
             {...getRadioProps()}
           >
             <Image src={image} borderRadius={'md'}mr={'5px'} {...getLabelProps()} />
@@ -87,7 +83,7 @@ const BySongLayout = () => {
       console.log(`The value is ${value}!`);   
     }
   
-    const { value, getRadioProps, getRootProps } = useRadioGroup({
+    const { getRadioProps, getRootProps } = useRadioGroup({
       name: "track-input",
       onChange: handleChange,
       value: selectedTrackID,
@@ -95,7 +91,6 @@ const BySongLayout = () => {
     
     return (
       <Stack {...getRootProps()}>
-        <Text>The selected radio id is: {value}</Text>
         <SimpleGrid spacing={'6px'} columns={{base:1,  sm:2, md:3}}>
           {tracks.map((track) => {
             return (
@@ -115,7 +110,6 @@ const BySongLayout = () => {
       </Stack>
     )
   }
-
 
   //recommender function 
   const getRecommendations = async () => {
@@ -177,7 +171,8 @@ const BySongLayout = () => {
       <Form onSubmit={getRecommendations}>
         { tracks && <CustomRadioGroup />}
 
-        <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>
+        {!selectedTrackID && <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button>}
+        {selectedTrackID && <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>}
       </Form>
 
       <Box as="main">

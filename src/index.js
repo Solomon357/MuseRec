@@ -2,19 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import App from './App';
-import { radioTheme } from './customthemes/radioStyle';
+//import { radioTheme } from './customthemes/radioStyle';
 import { buttonTheme } from './customthemes/buttonStyle';
 
 
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-//if my understanding is right I will use the "createMultiStyleConfigHelpers" component here
-//to auto customize any checkbox that I make
+//chakra themes for the webpage
 export const theme = extendTheme({
   components: {
-    Radio: radioTheme,
     Button: buttonTheme,
   },
   //add a lighter orange colour to use in colorScheme
@@ -32,6 +26,7 @@ export const theme = extendTheme({
   },
 })
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <ChakraProvider theme={theme}>

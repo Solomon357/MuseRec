@@ -1,7 +1,6 @@
-import { Box, Button, Collapse, Flex, Image, Link, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Collapse, Flex, Image, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 
 const SongResults = () => {
 
@@ -35,13 +34,16 @@ const SongResults = () => {
                         {songs.map((song) =>(
                             <Tr key={song.id}>
                                 <Td><Image src={song.album.images[2].url}/></Td>
-                                <Td isTruncated> {song.name} </Td>
+                                <Td maxW={'300px'} isTruncated> {song.name} </Td>
                                 <Td>{song.artists.map((artist, i) => (
                                     <Text key={i}> {artist.name + ((i !== song.artists.length-1) ? ',' : '')} </Text>
                                     ))}
                                 </Td>
-                                <Td> <audio controls> 
-                                        <source src={song.preview_url} type="audio/mpeg" />Your browser does not support</audio>
+                                <Td>{((song.preview_url) ?
+                                    <audio controls> 
+                                        <source src={song.preview_url} type="audio/mpeg" /> Sorry! Your browser does not support
+                                    </audio>
+                                    : <p> Sorry! Preview not available :&#40; </p>)}
                                 </Td>
                             </Tr>
                         ))}

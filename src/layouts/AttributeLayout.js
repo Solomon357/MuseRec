@@ -4,7 +4,6 @@ import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
 import Select from 'react-select';
 
-
 const AttributeLayout = () => {
     // states useStates
     const navigate = useNavigate();
@@ -15,8 +14,6 @@ const AttributeLayout = () => {
     const [isLoading, setIsLoading] = useState(true);
     const genreOptions = [];
 
-    
-    
     //test for token
     //console.log("check for access token "+accessToken) // => accessToken = string
 
@@ -131,5 +128,4 @@ const AttributeLayout = () => {
         </Container>
      );
 }
- 
 export default AttributeLayout;
