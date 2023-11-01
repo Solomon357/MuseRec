@@ -1,9 +1,10 @@
 import { Box, Button, Divider, Heading, Input, Text } from "@chakra-ui/react";
 //getDocs contains the functionality for reading all data
 import { getDocs, deleteDoc, doc, updateDoc, collection } from 'firebase/firestore';
-import { db } from 'C:/Users/solom/OneDrive/Desktop/Improved_FYP/improved_mrs/src/config/firebase.js';
+import { db } from '../firebaseConfig/firebase.js';
 
 import { useState, useEffect } from "react";
+
 //COMPONENT CONTAINS READ UPDATE AND DELETE FUNCTIONALITY
 const SongList = () => {
 

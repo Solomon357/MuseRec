@@ -1,14 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ChakraProvider } from "@chakra-ui/react"
-import './index.css';
+import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import App from './App';
+//import { radioTheme } from './customthemes/radioStyle';
+import { buttonTheme } from './customthemes/buttonStyle';
+
+
+//chakra themes for the webpage
+export const theme = extendTheme({
+  components: {
+    Button: buttonTheme,
+  },
+  //add a lighter orange colour to use in colorScheme
+  colors: {
+    brand: {
+      300: "#ffaf80",
+      400: "#ff8b47",
+      500: "#ffa500",
+      600: "#f45b00", 
+      700: "#dc5200", 
+      800: "#c34800", 
+      900: "#a33c00", 
+       
+    }
+  },
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={theme}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

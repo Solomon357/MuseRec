@@ -1,5 +1,5 @@
 import { Input, Container, Heading, Text, Button, Checkbox } from '@chakra-ui/react';
-import { db, auth } from 'C:/Users/solom/OneDrive/Desktop/Improved_FYP/improved_mrs/src/config/firebase.js';
+import { db, auth } from '../firebaseConfig/firebase.js';
 import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
 const Create = () => {
