@@ -29,7 +29,7 @@ const useAccessToken = () => {
             await fetch("https://accounts.spotify.com/api/token", authParams)
                 .then(res => {
                     if (!res.ok){
-                        throw Error("Couldn't fetch data")
+                        throw new Error("Couldn't fetch data")
                     } 
                         return res.json()
                     })
