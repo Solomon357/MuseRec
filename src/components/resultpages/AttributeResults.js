@@ -27,6 +27,7 @@ const AttributeResults = () => {
                             <Th>Album Cover</Th>
                             <Th>Song Name</Th>
                             <Th>Artist</Th>
+                            <Th>Preview</Th>
                         </Tr>
                         </Thead>
                         <Tbody>

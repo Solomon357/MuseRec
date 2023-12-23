@@ -1,7 +1,8 @@
-import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, } from "@chakra-ui/react";
+import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, VStack, } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
+import note from './musicalNotes2.png';
 
 const BySongLayout = () => {
   const navigate = useNavigate();
@@ -10,7 +11,8 @@ const BySongLayout = () => {
   
   const [searchInput, setSongInput] = useState("");
   const [selectedTrackID, setSelectedTrackID] = useState("");
-  const [tracks, setTracks] = useState([]);    
+  const [tracks, setTracks] = useState([]); 
+  const [clicked, setClicked] = useState(false)   
 
 
   const search = async () => {
@@ -116,7 +118,8 @@ const BySongLayout = () => {
     //just to check that search input is being saved
     console.log("Recommendations for "+ selectedTrackID)
 
-    //console.log("state of accessToken in recommender "+ accessToken)
+    //change the recommended clicked state so outlet can be displayed
+    setClicked(true);
 
     //first we need the parameters that we grab from my search page
     let accessParams = {
@@ -149,7 +152,7 @@ const BySongLayout = () => {
 
   return ( 
     <Container textAlign={"center"} maxW={'5xl'}>
-      <Heading>Search by Song</Heading>
+      <Heading>Search by Artist or Song</Heading>
 
       <FormControl my={"40px"} isRequired >
         <FormLabel>Find Songs</FormLabel>
@@ -166,17 +169,31 @@ const BySongLayout = () => {
         />
 
         <Button type="submit" onClick={search}>Find Song</Button>
+
+        {/* {tracks && <Image src=""> </Image> }*/}
       </FormControl>
 
       <Form onSubmit={getRecommendations}>
         { tracks && <CustomRadioGroup />}
 
-        {!selectedTrackID && <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button>}
-        {selectedTrackID && <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>}
+        {selectedTrackID 
+        ? <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>
+        : <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button> 
+        }
+        
       </Form>
 
       <Box as="main">
-        <Outlet />
+        {clicked 
+          ? <Outlet /> 
+          : <VStack p={"3px"} align={"stretch"}>
+              <Flex justifyContent={"center"} alignItems={"center"} mt={"5"} maxW={"5xl"}>
+                <Image src={note} w={"80%"} h={"300px"} />
+              </Flex>
+              <Text color={"#a6a6a6"} fontSize={"xl"}>Recommended Songs will appear here</Text>
+            </VStack>
+            
+        }
       </Box>
     </Container>
   );
