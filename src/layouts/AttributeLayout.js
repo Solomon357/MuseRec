@@ -1,8 +1,9 @@
-import { Box, Heading, Container, Button, Text, FormControl } from "@chakra-ui/react";
+import { Box, Heading, Container, Button, FormControl, Image, Text, Flex, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
 import Select from 'react-select';
+import note from './musicalNotes2.png';
 
 const AttributeLayout = () => {
     // states useStates
@@ -13,6 +14,7 @@ const AttributeLayout = () => {
     const [genreValues, setGenreValues] = useState(null); 
     const [isLoading, setIsLoading] = useState(true);
     const genreOptions = [];
+    const [clicked, setClicked] = useState(false)
 
     //test for token
     //console.log("check for access token "+accessToken) // => accessToken = string
@@ -72,8 +74,9 @@ const AttributeLayout = () => {
     const getRecommendations = async() => {
         //checking that we have genreValue State
         console.log("Recommendations for "+ genreValues);
-    
-    
+
+        //change the recommended clicked state so outlet can be displayed
+        setClicked(true);
         //parameters that give us access to spotify API
         let accessParams = {
             method: "GET",
@@ -105,9 +108,9 @@ const AttributeLayout = () => {
         <Container textAlign={"center"} maxW={"5xl"}>
             <Heading mb={"50px"}>Search by Attributes</Heading>
             <Form onSubmit={getRecommendations}>
+
                 {genreOptions && 
                 <FormControl>
-                    <Text>genre values is: {genreValues}</Text>
                     <Select 
                         options={genreOptions}  
                         placeholder="Please Select Genre..."
@@ -118,12 +121,26 @@ const AttributeLayout = () => {
 
                 {/* im sure i can structure this better with more understanding of Form element*/}
                 
-                <Button type="submit">Get Recommended Songs</Button>
+                {genreValues 
+                ? <Button type="submit">Get Recommended Songs</Button>
+                : <Button type="submit" isDisabled>Get Recommended Songs</Button>
+                }
             </Form>
 
 
             <Box as="main">
-                <Outlet />
+
+                {clicked 
+                ? <Outlet /> 
+                : <VStack p={"3px"} align={"stretch"}>
+                    <Flex justifyContent={"center"} alignItems={"center"} mt={"5"} maxW={"5xl"} >
+                        <Image src={note} w={"80%"} h={"300px"} />
+                    </Flex>
+                    <Text color={"#a6a6a6"} fontSize={"xl"}>Recommended Songs will appear here</Text>
+8080              </VStack>
+                  
+                }
+
             </Box>
         </Container>
      );
