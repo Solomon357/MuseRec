@@ -2,7 +2,7 @@ import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormContr
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
-import note from './musicalNotes2.png';
+import note from './musicalNotes.png';
 
 const BySongLayout = () => {
   const navigate = useNavigate();

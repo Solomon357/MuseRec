@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
 import Select from 'react-select';
-import note from './musicalNotes2.png';
+import note from './musicalNotes.png';
 
 const AttributeLayout = () => {
     // states useStates
