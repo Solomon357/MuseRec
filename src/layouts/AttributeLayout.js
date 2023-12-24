@@ -137,8 +137,7 @@ const AttributeLayout = () => {
                         <Image src={note} w={"80%"} h={"300px"} />
                     </Flex>
                     <Text color={"#a6a6a6"} fontSize={"xl"}>Recommended Songs will appear here</Text>
-8080              </VStack>
-                  
+                  </VStack>                 
                 }
 
             </Box>
