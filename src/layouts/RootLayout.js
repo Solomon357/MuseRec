@@ -7,8 +7,7 @@ const RootLayout = () => {
         <Box className="root-layout">
             <Navbar />
 
-
-            <Box as="main">
+            <Box as="main" height={"100vh"}>
                 <Outlet />
             </Box>
         </Box>

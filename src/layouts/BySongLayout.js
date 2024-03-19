@@ -44,6 +44,7 @@ const BySongLayout = () => {
   }
 
   //this RadioGroup function will encapsulate all the functionality that governs the custom radio 
+  //should be in its own separate file
   function CustomRadioGroup() {
     function CustomRadio(props) {
       const { image, title, albumName, artistName, ...radioProps } = props
@@ -169,8 +170,6 @@ const BySongLayout = () => {
         />
 
         <Button type="submit" onClick={search}>Find Song</Button>
-
-        {/* {tracks && <Image src=""> </Image> }*/}
       </FormControl>
 
       <Form onSubmit={getRecommendations}>

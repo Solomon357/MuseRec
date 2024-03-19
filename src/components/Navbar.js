@@ -9,7 +9,7 @@ const Navbar = () => {
             <Heading>Muse
                 <Heading as={"span"} color={"white"}>Rec</Heading>
             </Heading>
-            <Text size={"xs"}>ver 0.1.0</Text>
+            <Text size={"xs"}>ver 0.1.2</Text>
             <Spacer />
             <HStack gap={4}>
                 <Button colorScheme="Yellow" _hover={{bgColor:"red"}} onClick={() => navigate("/")}>Home</Button>
