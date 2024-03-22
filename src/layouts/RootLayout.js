@@ -3,15 +3,15 @@ import { Outlet } from "react-router-dom";
 import Navbar from '../components/Navbar';
 
 const RootLayout = () => {
-    return ( 
-        <Box className="root-layout">
-            <Navbar />
+  return ( 
+    <Box className="root-layout">
+      <Navbar />
 
-            <Box as="main" height={"100vh"}>
-                <Outlet />
-            </Box>
-        </Box>
-     );
+      <Box as="main" height={"100vh"}>
+        <Outlet />
+      </Box>
+    </Box>
+  );
 }
  
 export default RootLayout;

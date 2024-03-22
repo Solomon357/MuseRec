@@ -5,8 +5,18 @@ import App from './App';
 import { buttonTheme } from './customthemes/buttonStyle';
 
 
-//chakra themes for the webpage
+//chakra themes
+
+const breakpoints = {
+  base: "0px",
+  sm: "621px",
+  md: "768px",
+  lg: "1008px",
+  xl: "1280px",
+  "2xl": "1536px",
+};
 export const theme = extendTheme({
+  breakpoints,
   components: {
     Button: buttonTheme,
   },
@@ -34,8 +44,4 @@ root.render(
     </React.StrictMode>
   </ChakraProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 
