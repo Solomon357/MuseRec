@@ -1,15 +1,16 @@
-import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, VStack, } from "@chakra-ui/react";
+import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, VStack, HStack, Spacer } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
-import note from './musicalNotes2.png';
+import musicPlaceholder from '../images/music-placeholder-image-1.jpg';
+import CircularAudio from "../components/CircularAudio";
 
 const BySongLayout = () => {
   const navigate = useNavigate();
   //states + useStates
   const accessToken = useAccessToken(); 
   
-  const [searchInput, setSongInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [selectedTrackID, setSelectedTrackID] = useState("");
   const [tracks, setTracks] = useState([]); 
   const [clicked, setClicked] = useState(false)   
@@ -17,10 +18,9 @@ const BySongLayout = () => {
 
   const search = async () => {
     //just to check that search input is being saved
-    console.log("Searching for "+ searchInput)
-    console.log("state of accessToken in search "+accessToken)
+    //console.log("Searching for "+ searchInput)
 
-    //first we get the parameters needed to initiate a search
+    //parameters needed to initiate a search
     let accessParams = {
       method: "GET",
       headers: {
@@ -29,24 +29,23 @@ const BySongLayout = () => {
       }
     } 
 
-    // we use the search end point to get the id of one element
-    //search request with spotify api always returns the 20 most relevant items if you dont specify a limit
+    //search request with spotify api  will always returns the 20 most relevant items by default
     let returnedTracks = await fetch('https://api.spotify.com/v1/search?q='+ searchInput +'&type=track', accessParams)
       .then(response => response.json())
-      //console logging api requests is very useful for debugging
       .then(data => { return data.tracks.items })
       .catch(error => console.log(error))
-
+    console.log(returnedTracks)
     setTracks(returnedTracks);
     
     //check for structure of tracks usestate
-    // console.log(tracks) => this will return nothing cus useState is async but results are deffo there
+    // console.log(tracks) //=> this will return nothing cus useState is async but results are deffo there
   }
 
   //this RadioGroup function will encapsulate all the functionality that governs the custom radio 
+  //should be in its own separate file
   function CustomRadioGroup() {
     function CustomRadio(props) {
-      const { image, title, albumName, artistName, ...radioProps } = props
+      const { image, title, albumName, artistName, song_preview, id, ...radioProps } = props
       const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
         useRadio(radioProps)
         
@@ -69,12 +68,20 @@ const BySongLayout = () => {
             }}
             {...getRadioProps()}
           >
-            <Image src={image} borderRadius={'md'}mr={'5px'} {...getLabelProps()} />
-            <Box textAlign={'left'}>
-              <Heading size={'sm'} mb={'3px'}> {title} </Heading>
-              <Text fontSize={'sm'}> Album: {albumName === title ? 'Single' : albumName}</Text>
-              <Text fontSize={'sm'}> By: {artistName}</Text>
-            </Box>
+            <HStack spacing={"5px"} width={"100%"}>
+              <Image src={image} height={"100%"} borderRadius={'md'} {...getLabelProps()} />
+              <Box textAlign={'left'} maxH={"100%"}>
+                <Heading size={'sm'} mb={'3px'}> {title} </Heading>
+                <Text fontSize={'sm'}> Album: {albumName === title ? 'Single' : albumName}</Text>
+                <Text fontSize={'sm'}> By: {artistName}</Text>
+              </Box>
+              <Spacer />
+              {song_preview ? 
+                <CircularAudio song={song_preview} idnum={id} />
+                : 
+                <CircularAudio disabled={true}/>
+              }
+            </HStack>
           </Flex>
         </chakra.label>
       )
@@ -93,11 +100,12 @@ const BySongLayout = () => {
     
     return (
       <Stack {...getRootProps()}>
-        <SimpleGrid spacing={'6px'} columns={{base:1,  sm:2, md:3}}>
+        <SimpleGrid spacing={'6px'} columns={{base:1,  sm:2, lg:3}}>
           {tracks.map((track) => {
             return (
               <CustomRadio
                 key={track.id}
+                id={track.id}
                 image={track.album.images[2].url}
                 {...getRadioProps({ value: track.id })}
                 title = {track.name}
@@ -105,6 +113,8 @@ const BySongLayout = () => {
                 artistName = {track.artists.map((artist, i) =>(
                   artist.name + ((i !== track.artists.length-1) ? ', ' : '')
                 ))}
+                song_preview = {track.preview_url}
+                
               />
             )
           })}
@@ -113,10 +123,9 @@ const BySongLayout = () => {
     )
   }
 
-  //recommender function 
   const getRecommendations = async () => {
-    //just to check that search input is being saved
-    console.log("Recommendations for "+ selectedTrackID)
+    //test for selectTrackID
+    //console.log("Recommendations for "+ selectedTrackID)
 
     //change the recommended clicked state so outlet can be displayed
     setClicked(true);
@@ -130,69 +139,67 @@ const BySongLayout = () => {
       }
     } 
 
-    //run recommender api call with the track artist, genre and trackID (might only need track ID)
     let recommendedTracks = await fetch('https://api.spotify.com/v1/recommendations?seed_tracks='+ selectedTrackID +'&limit=10', accessParams)
       .then(response => response.json())
-      //console logging api requests is very useful for understanding the path i need for specific data
-      //returning data.tracks to recommendedTracks variable
       .then(data => { return data.tracks })
       .catch(error => console.log(error))
 
-    //testing if api call actually returned recommended songs 
-    console.log(recommendedTracks)
+    //test for returned recommended songs 
+    //console.log(recommendedTracks)
 
     //once we have the data for the recommended songs we navigate to the child component
     navigate("by-song-results", {state:{songOutput: recommendedTracks, access_token: accessToken}});
       
   }
   
-  //STATE CHECKS
+  //STATE TEST CHECKS
   // console.log("state of tracks array "+ tracks) // end state should be an array of tracks from search
   // console.log("Selected track id= "+ selectedTrackID) // value should be trackID every render 
 
   return ( 
     <Container textAlign={"center"} maxW={'5xl'}>
-      <Heading>Search by Artist or Song</Heading>
 
-      <FormControl my={"40px"} isRequired >
+      <Heading mb={"50px"}>Search by Artist or Song</Heading>
+
+      <FormControl isRequired textAlign={"left"}>
         <FormLabel>Find Songs</FormLabel>
         <Input 
           type="search" 
-          placeholder="Search for Songs!" 
+          placeholder="Search for Songs or Artists!" 
           maxW={"70%"}
+          mr={"10px"}
+          focusBorderColor="orange"
           onKeyUp={(e) => {
-              if (e.key === "Enter"){
-                  search();
-              }
+            if (e.key === "Enter"){
+              search();
+            }
           }}
-          onChange={(e) => setSongInput(e.target.value)}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
 
-        <Button type="submit" onClick={search}>Find Song</Button>
-
-        {/* {tracks && <Image src=""> </Image> }*/}
+        <Button type="submit" mb={"5px"} w={"20%"} minW={"90px"} onClick={search}>Find Songs</Button>
       </FormControl>
-
+      
       <Form onSubmit={getRecommendations}>
         { tracks && <CustomRadioGroup />}
 
-        {selectedTrackID 
-        ? <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>
-        : <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button> 
-        }
-        
+        {selectedTrackID ?
+         <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>
+         :
+         <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button> 
+        } 
       </Form>
 
       <Box as="main">
-        {clicked 
-          ? <Outlet /> 
-          : <VStack p={"3px"} align={"stretch"}>
-              <Flex justifyContent={"center"} alignItems={"center"} mt={"5"} maxW={"5xl"}>
-                <Image src={note} w={"80%"} h={"300px"} />
-              </Flex>
-              <Text color={"#a6a6a6"} fontSize={"xl"}>Recommended Songs will appear here</Text>
-            </VStack>
-            
+        {clicked ? <Outlet /> 
+          : 
+          <VStack p={"3px"} align={"stretch"}>
+            <Flex justifyContent={"center"} alignItems={"center"} mt={"5"} maxW={"5xl"}>
+              <Image src={musicPlaceholder} w={"80%"} h={"300px"} />
+            </Flex>
+
+            <Text color={"#a6a6a6"} fontSize={"xl"}>Recommended Songs will appear here</Text>
+          </VStack>  
         }
       </Box>
     </Container>
