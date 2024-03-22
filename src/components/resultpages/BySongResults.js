@@ -1,5 +1,5 @@
 import { Box, Button, Collapse, Flex, Image, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CircularAudio from "../CircularAudio";
 
@@ -11,6 +11,11 @@ const SongResults = () => {
   const [show, setShow] = useState(false);
 
   const handleToggle = () => setShow(!show)
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior:"smooth"});
+    console.log("running use Effect!")
+  },[songs])
 
   //test
   // console.log("below is recommended songs in a different component");

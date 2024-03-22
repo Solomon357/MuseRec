@@ -15,7 +15,7 @@ const AttributeLayout = () => {
   const [genreValues, setGenreValues] = useState(null); 
   const [isLoading, setIsLoading] = useState(true);
   const [clicked, setClicked] = useState(false)
-  const [multiOptions, setMultiOptions] = useState([]); //for storing user options
+  const [multiOptions, setMultiOptions] = useState([]); //for storing user selection
   const genreOptions = []; //for populating Select Input
   
   
@@ -48,17 +48,20 @@ const AttributeLayout = () => {
       genreOptions.push({value:genre, label: genre})
     ));
   } 
-
   //checking genre states
   //console.log(genres);  Array(126)
   //console.log(genreOptions) (126) [{...}, {...}]
-  
+
+
+  //** MINOR BUG, OPTIONS STRING DELAYED BY A RENDER */
   const handleChange = (options) => {
     setMultiOptions(options) // => [{...}]
 
     let optionsString = []
     multiOptions.map((option) => optionsString.push(option.value))
     setGenreValues(optionsString.join(",")); 
+   // console.log(genreValues)
+   // console.log(multiOptions)
   }
 
   const getRecommendations = async() => {
