@@ -1,9 +1,11 @@
-import { Box, Heading, Container, Button, FormControl, Image, Text, Flex, VStack } from "@chakra-ui/react";
+import { Box, Heading, Container, Button, FormControl, Image, Text, Flex, VStack, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
+import { Select } from "chakra-react-select"
 import useAccessToken from "../components/useAccessToken";
-import Select from 'react-select';
+// import Select from 'react-select';
 import musicPlaceholder from '../images/musicalNotes.png';
+
 
 const AttributeLayout = () => {
 
@@ -12,9 +14,11 @@ const AttributeLayout = () => {
   const [genreArray, setGenreArray] = useState(null);
   const [genreValues, setGenreValues] = useState(null); 
   const [isLoading, setIsLoading] = useState(true);
-  const genreOptions = [];
   const [clicked, setClicked] = useState(false)
-
+  const [multiOptions, setMultiOptions] = useState([]); //for storing user options
+  const genreOptions = []; //for populating Select Input
+  
+  
   const fetchGenres = async () => {
     let accessParams = {
       method: "GET",
@@ -49,14 +53,12 @@ const AttributeLayout = () => {
   //console.log(genres);  Array(126)
   //console.log(genreOptions) (126) [{...}, {...}]
   
-  const handleChange = (selectedOptions) => {
-    const multiOptions = [];
-    selectedOptions.map((option) => (
-      multiOptions.push(option.value) // store every value in multiOptions
-    ))
-    
-    setGenreValues(multiOptions.join(",")); 
-    // console.log("handleChange: ", selectedOption); // => [{...}]
+  const handleChange = (options) => {
+    setMultiOptions(options) // => [{...}]
+
+    let optionsString = []
+    multiOptions.map((option) => optionsString.push(option.value))
+    setGenreValues(optionsString.join(",")); 
   }
 
   const getRecommendations = async() => {
@@ -96,18 +98,16 @@ const AttributeLayout = () => {
 
         {genreOptions && 
           <FormControl>
-            <Text textAlign={"left"} fontWeight={"medium"} color={"grey"}>Type multi-word genres like "r-n-b"</Text>
+            <FormLabel textAlign={"left"} fontWeight={"medium"} color={"grey"}>Type multi-word genres like "r-n-b"</FormLabel>
             <Select 
-              options={genreOptions}  
-              placeholder="Please Select Genre..."
-              onChange={handleChange}
               isMulti
-              // styles={{
-              //   control: (baseStyles, state) => ({
-              //     ...baseStyles,
-              //     borderColor: state.isFocused ? 'orange' : 'grey',
-              //   }),
-              // }}
+              value={multiOptions}
+              options={genreOptions} 
+              onChange={handleChange} 
+              placeholder="Please Select Genre..."
+              colorScheme="orange"
+              focusBorderColor="orange"
+              isOptionDisabled={() => multiOptions.length >= 5}
             />
           </FormControl>
         }

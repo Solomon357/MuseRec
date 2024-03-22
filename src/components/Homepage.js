@@ -5,6 +5,10 @@ import MusicLogo from "../images/soundcloud_music_icon.png"
 
 const Homepage = () => {
 
+  //things i can do tomorrow:
+  // push dev-branch into main
+  // see if i can control timeline of circular audio 
+
   const navigate = useNavigate();
 
   const styles = {
@@ -17,8 +21,8 @@ const Homepage = () => {
   }
 
   return (
-    <Container maxW={"80%"} h={"100vh"}  display="flex" justifyContent={"center"} alignItems={"center"} centerContent>
-      <Flex mb={"5%"}>
+    <Container maxW={"80%"} display="flex" justifyContent={"center"} alignItems={"center"} centerContent>
+      <Flex mt={"10%"}>
 
         <Image src={MusicLogo} maxH="128px" maxW="128px" alt="MusicLogo" mr={"10px"} />
         <Box>
@@ -43,7 +47,7 @@ const Homepage = () => {
         </Box>
       </Flex> 
       
-      <Text fontSize={"xl"} mb={"40px"}>How would you like your songs recommended?</Text>
+      <Text fontSize={"xl"} my={"40px"}>How would you like your songs recommended?</Text>
 
       <Flex width={"50%"} wrap={"wrap"} gap={2}>
         <Button size={"lg"} minWidth={"163px"} onClick={()=> navigate("by-song")}>By Artist or Song</Button>

@@ -12,14 +12,37 @@ const Navbar = () => {
           <Heading as={"span"} color={"white"}>Rec</Heading>
         </Heading>
       </ChakraLink>
-      <Text size={"xs"}>ver 0.1.2</Text>
+      <Text size={"xs"} display={{base:"none", sm:"inline"}}>ver 0.2.0</Text>
 
       <Spacer />
-      
-      <HStack gap={5}>
-        <IconButton as={ChakraLink} href="mailto:solomonoddy@hotmail.com" variant="ghost" _hover={{bgColor:"orange"}} fontSize={"30px"} icon={<EmailIcon color={"white"}/>}/>
-        <IconButton as={ChakraLink} href="https://www.linkedin.com/in/solomon-odeleye-bab5241b9/" variant="ghost" _hover={{bgColor:"orange"}} icon={<LinkedIn fill={"white"} width={"30px"} height={"30px"}/>}/>
-        <IconButton as={ChakraLink} href="https://github.com/Solomon357" variant="ghost" _hover={{bgColor:"orange"}} icon={<Github width={"33px"} height={"33px"}/>}/>
+
+      <HStack gap={{base:"1px", sm:5}}>
+        <IconButton 
+          as={ChakraLink} 
+          href="mailto:solomonoddy@hotmail.com" 
+          variant="ghost" 
+          _hover={{bgColor:"orange"}} 
+          fontSize={"30px"} 
+          icon={<EmailIcon color={"white"} />}
+        />
+
+        <IconButton 
+          as={ChakraLink} 
+          href="https://www.linkedin.com/in/solomon-odeleye-bab5241b9/" 
+          variant="ghost" 
+          _hover={{bgColor:"orange"}}  
+          icon={<LinkedIn fill={"white"} width={"30px"} height={"30px"}/>}
+          isExternal
+        />
+
+        <IconButton 
+          as={ChakraLink} 
+          href="https://github.com/Solomon357" 
+          variant="ghost" 
+          _hover={{bgColor:"orange"}} 
+          icon={<Github width={"33px"} height={"33px"}/>}
+          isExternal
+        />
       </HStack>
     </Flex>
   );

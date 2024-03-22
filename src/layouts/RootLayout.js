@@ -4,10 +4,10 @@ import Navbar from '../components/Navbar';
 
 const RootLayout = () => {
   return ( 
-    <Box className="root-layout">
+    <Box className="root-layout" maxH={"100vh"} maxW={"100vw"}>
       <Navbar />
 
-      <Box as="main" height={"100vh"}>
+      <Box as="main">
         <Outlet />
       </Box>
     </Box>

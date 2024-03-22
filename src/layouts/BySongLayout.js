@@ -1,8 +1,8 @@
-import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, VStack, HStack, Spacer, Divider, } from "@chakra-ui/react";
+import { Text, Stack, useRadioGroup, useRadio, Box, Button, Container, FormControl, FormLabel, Heading, Image, Input, SimpleGrid, chakra, Flex, VStack, HStack, Spacer } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import useAccessToken from "../components/useAccessToken";
-import musicPlaceholder from '../images/musicalNotes.png';
+import musicPlaceholder from '../images/music-placeholder-image-1.jpg';
 import CircularAudio from "../components/CircularAudio";
 
 const BySongLayout = () => {
@@ -38,7 +38,7 @@ const BySongLayout = () => {
     setTracks(returnedTracks);
     
     //check for structure of tracks usestate
-    // console.log(tracks) => this will return nothing cus useState is async but results are deffo there
+    // console.log(tracks) //=> this will return nothing cus useState is async but results are deffo there
   }
 
   //this RadioGroup function will encapsulate all the functionality that governs the custom radio 
@@ -72,7 +72,6 @@ const BySongLayout = () => {
               <Image src={image} height={"100%"} borderRadius={'md'} {...getLabelProps()} />
               <Box textAlign={'left'} maxH={"100%"}>
                 <Heading size={'sm'} mb={'3px'}> {title} </Heading>
-                <Divider colorScheme="red" />
                 <Text fontSize={'sm'}> Album: {albumName === title ? 'Single' : albumName}</Text>
                 <Text fontSize={'sm'}> By: {artistName}</Text>
               </Box>
@@ -160,14 +159,16 @@ const BySongLayout = () => {
   return ( 
     <Container textAlign={"center"} maxW={'5xl'}>
 
-      <Heading>Search by Artist or Song</Heading>
+      <Heading mb={"50px"}>Search by Artist or Song</Heading>
 
-      <FormControl my={"40px"} isRequired >
+      <FormControl isRequired textAlign={"left"}>
         <FormLabel>Find Songs</FormLabel>
         <Input 
           type="search" 
-          placeholder="Search for Songs!" 
+          placeholder="Search for Songs or Artists!" 
           maxW={"70%"}
+          mr={"10px"}
+          focusBorderColor="orange"
           onKeyUp={(e) => {
             if (e.key === "Enter"){
               search();
@@ -176,9 +177,9 @@ const BySongLayout = () => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
 
-        <Button type="submit" onClick={search}>Find Song</Button>
+        <Button type="submit" mb={"5px"} w={"20%"} minW={"90px"} onClick={search}>Find Songs</Button>
       </FormControl>
-
+      
       <Form onSubmit={getRecommendations}>
         { tracks && <CustomRadioGroup />}
 
