@@ -4,7 +4,7 @@ import { Form, Outlet, useNavigate } from "react-router-dom";
 import { Select } from "chakra-react-select"
 import useAccessToken from "../components/useAccessToken";
 // import Select from 'react-select';
-import musicPlaceholder from '../images/musicalNotes.png';
+import musicPlaceholder from '../images/music-placeholder-image-1.jpg';
 
 
 const AttributeLayout = () => {
