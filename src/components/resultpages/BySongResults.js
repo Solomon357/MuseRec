@@ -8,13 +8,13 @@ const SongResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const songs = location.state.songOutput; 
+  const selectedSongName = location.state.selectedSongName;
   const [show, setShow] = useState(false);
 
   const handleToggle = () => setShow(!show)
 
   useEffect(() => {
     window.scrollTo({ top: document.body.scrollHeight, behavior:"smooth"});
-    console.log("running use Effect!")
   },[songs])
 
   //test
@@ -25,8 +25,8 @@ const SongResults = () => {
     <Box>
       <Collapse startingHeight={580} in={show}>
         <TableContainer>
-          <Table variant='simple'>
-            <TableCaption placement="top">Results Recommended by Song</TableCaption>
+          <Table>
+            <TableCaption placement="top"fontSize={"17px"} >Recommended songs for <Text as={"span"} color={"orange"}>{selectedSongName}</Text></TableCaption>
             <Thead>
               <Tr>
                 <Th>Album Cover</Th>
