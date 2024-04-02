@@ -26,7 +26,7 @@ const SongResults = () => {
       <Collapse startingHeight={580} in={show}>
         <TableContainer>
           <Table>
-            <TableCaption placement="top"fontSize={"17px"} >Recommended songs for <Text as={"span"} color={"orange"}>{selectedSongName}</Text></TableCaption>
+            <TableCaption placement="top" fontSize={"17px"}>Recommended songs for <Text as={"span"} color={"orange"}>{selectedSongName}</Text></TableCaption>
             <Thead>
               <Tr>
                 <Th>Album Cover</Th>

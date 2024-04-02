@@ -24,7 +24,7 @@ const AttributeResults = () => {
       <Collapse startingHeight={580} in={show}>
         <TableContainer>
           <Table variant='simple'>
-            <TableCaption placement="top">Results Recommended by Attribute</TableCaption>
+            <TableCaption placement="top" fontSize={"17px"}>Songs recommended by Genres</TableCaption>
             <Thead>
               <Tr>
                 <Th>Album Cover</Th>
@@ -38,8 +38,9 @@ const AttributeResults = () => {
                 <Tr key={song.id}>
                   <Td><Image src={song.album.images[2].url}/></Td>
                   <Td isTruncated> {song.name} </Td>
-                  <Td>{song.artists.map((artist, i) => (
-                    <Text key={artist.id}> {artist.name + ((i !== song.artists.length-1) ? ', ' : '')} </Text>
+                  <Td>
+                    {song.artists.map((artist, i) => (
+                      <Text key={artist.id}> {artist.name + ((i !== song.artists.length-1) ? ', ' : '')} </Text>
                     ))}
                   </Td>
                   <Td>{((song.preview_url) ?

@@ -90,7 +90,7 @@ const BySongLayout = () => {
     }
     
     const handleChange = (value) => {
-      var newVal = value.split(",")
+      let newVal = value.split(",")
       setSelectedDetails(value);
       setSelectedTrackID(newVal[0]);
       setSelectedTrackName(newVal[1]);
