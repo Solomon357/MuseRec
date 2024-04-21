@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Form, Outlet, useNavigate } from "react-router-dom";
 import { Select } from "chakra-react-select"
 import useAccessToken from "../components/useAccessToken";
-// import Select from 'react-select';
-import musicPlaceholder from '../images/musicalNotes.png';
+import musicPlaceholder from '../images/music-placeholder-image-1.jpg';
 
 
 const AttributeLayout = () => {
@@ -12,10 +11,10 @@ const AttributeLayout = () => {
   const navigate = useNavigate();
   const accessToken = useAccessToken();
   const [genreArray, setGenreArray] = useState(null);
-  const [genreValues, setGenreValues] = useState(null); 
+  const [genreValues, setGenreValues] = useState(""); 
   const [isLoading, setIsLoading] = useState(true);
   const [clicked, setClicked] = useState(false)
-  const [multiOptions, setMultiOptions] = useState([]); //for storing user options
+  const [multiOptions, setMultiOptions] = useState([]); //for storing user selection
   const genreOptions = []; //for populating Select Input
   
   
@@ -52,18 +51,23 @@ const AttributeLayout = () => {
   //checking genre states
   //console.log(genres);  Array(126)
   //console.log(genreOptions) (126) [{...}, {...}]
-  
-  const handleChange = (options) => {
-    setMultiOptions(options) // => [{...}]
 
-    let optionsString = []
-    multiOptions.map((option) => optionsString.push(option.value))
-    setGenreValues(optionsString.join(",")); 
+  const handleChange = (options) => {
+    const optionsString = []
+    setMultiOptions(options) // => [{...}]
+    
+    options.map((option) => ( 
+      optionsString.push(option.value)
+    ))
+
+    setGenreValues(optionsString.join())
+    //test for multioptions string
+    //console.log("optionsString:", optionsString.join())
   }
 
   const getRecommendations = async() => {
     //checking that we have genreValue State
-    //console.log("Recommendations for "+ genreValues);
+    console.log("Recommendations for "+ genreValues);
 
     //change the recommended clicked state so outlet can be displayed
     setClicked(true);
@@ -88,6 +92,8 @@ const AttributeLayout = () => {
     //once we have the data for the recommended songs we navigate to the child component
     navigate("attribute-results", {state:{songOutput: recommendedTracks}});        
   }
+
+  // console.log("genreValues in global scope:", genreValues)
 
   return ( 
     <Container textAlign={"center"} maxW={"5xl"}>

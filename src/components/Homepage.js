@@ -5,8 +5,8 @@ import MusicLogo from "../images/soundcloud_music_icon.png"
 
 const Homepage = () => {
 
-  //things i can do tomorrow:
-  // push dev-branch into main
+  //TODO:
+  //fix minor handlechange bug in attribute layout
   // see if i can control timeline of circular audio 
 
   const navigate = useNavigate();

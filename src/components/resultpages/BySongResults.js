@@ -1,5 +1,5 @@
 import { Box, Button, Collapse, Flex, Image, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CircularAudio from "../CircularAudio";
 
@@ -8,9 +8,14 @@ const SongResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const songs = location.state.songOutput; 
+  const selectedSongName = location.state.selectedSongName;
   const [show, setShow] = useState(false);
 
   const handleToggle = () => setShow(!show)
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior:"smooth"});
+  },[songs])
 
   //test
   // console.log("below is recommended songs in a different component");
@@ -20,8 +25,8 @@ const SongResults = () => {
     <Box>
       <Collapse startingHeight={580} in={show}>
         <TableContainer>
-          <Table variant='simple'>
-            <TableCaption placement="top">Results Recommended by Song</TableCaption>
+          <Table>
+            <TableCaption placement="top" fontSize={"17px"}>Recommended songs for <Text as={"span"} color={"orange"}>{selectedSongName}</Text></TableCaption>
             <Thead>
               <Tr>
                 <Th>Album Cover</Th>

@@ -1,29 +1,30 @@
 import { Box, Button, Collapse, Flex, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, Image, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CircularAudio from "../CircularAudio";
 
 
 const AttributeResults = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
   const songs = location.state.songOutput;
-
   const [show, setShow] = useState(false)
 
   const handleToggle = () => setShow(!show)
   
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior:"smooth"});
+  },[songs])
+  
   //tests
   // console.log("attribute recommended songs in a different component")
   // console.log(songs);
-
   return ( 
     <Box>
       <Collapse startingHeight={580} in={show}>
         <TableContainer>
           <Table variant='simple'>
-            <TableCaption placement="top">Results Recommended by Attribute</TableCaption>
+            <TableCaption placement="top" fontSize={"17px"}>Songs recommended by Genres</TableCaption>
             <Thead>
               <Tr>
                 <Th>Album Cover</Th>
@@ -37,8 +38,9 @@ const AttributeResults = () => {
                 <Tr key={song.id}>
                   <Td><Image src={song.album.images[2].url}/></Td>
                   <Td isTruncated> {song.name} </Td>
-                  <Td>{song.artists.map((artist, i) => (
-                    <Text key={artist.id}> {artist.name + ((i !== song.artists.length-1) ? ', ' : '')} </Text>
+                  <Td>
+                    {song.artists.map((artist, i) => (
+                      <Text key={artist.id}> {artist.name + ((i !== song.artists.length-1) ? ', ' : '')} </Text>
                     ))}
                   </Td>
                   <Td>{((song.preview_url) ?

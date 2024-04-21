@@ -11,7 +11,9 @@ const BySongLayout = () => {
   const accessToken = useAccessToken(); 
   
   const [searchInput, setSearchInput] = useState("");
+  const [selectedDetails, setSelectedDetails] = useState("");
   const [selectedTrackID, setSelectedTrackID] = useState("");
+  const [selectedTrackName, setSelectedTrackName] = useState("");
   const [tracks, setTracks] = useState([]); 
   const [clicked, setClicked] = useState(false)   
 
@@ -88,14 +90,22 @@ const BySongLayout = () => {
     }
     
     const handleChange = (value) => {
-      setSelectedTrackID(value);
-      console.log(`The value is ${value}!`);   
+      let newVal = value.split(",")
+      setSelectedDetails(value);
+      setSelectedTrackID(newVal[0]);
+      setSelectedTrackName(newVal[1]);
+      
+
+      // tests for correct values on selection
+      // console.log(`The value is ${value}!`);   
+      // console.log(`Test for split[0] ${newVal[0]}!`);   
+      // console.log(`Test for split[1] ${newVal[1]}!`);   
     }
   
     const { getRadioProps, getRootProps } = useRadioGroup({
       name: "track-input",
       onChange: handleChange,
-      value: selectedTrackID,
+      value: selectedDetails,
     })
     
     return (
@@ -107,7 +117,7 @@ const BySongLayout = () => {
                 key={track.id}
                 id={track.id}
                 image={track.album.images[2].url}
-                {...getRadioProps({ value: track.id })}
+                {...getRadioProps({ value: track.id+","+track.name })}
                 title = {track.name}
                 albumName = {track.album.name}
                 artistName = {track.artists.map((artist, i) =>(
@@ -148,8 +158,7 @@ const BySongLayout = () => {
     //console.log(recommendedTracks)
 
     //once we have the data for the recommended songs we navigate to the child component
-    navigate("by-song-results", {state:{songOutput: recommendedTracks, access_token: accessToken}});
-      
+    navigate("by-song-results", {state:{songOutput: recommendedTracks, access_token: accessToken, selectedSongName: selectedTrackName}});  
   }
   
   //STATE TEST CHECKS
@@ -183,7 +192,7 @@ const BySongLayout = () => {
       <Form onSubmit={getRecommendations}>
         { tracks && <CustomRadioGroup />}
 
-        {selectedTrackID ?
+        {selectedDetails ?
          <Button type="submit" size={"lg"} width={"80%"} my={"10px"}> Get Recommendations!</Button>
          :
          <Button type="submit" size={"lg"} width={"80%"} my={"10px"} isDisabled> Get Recommendations!</Button> 
