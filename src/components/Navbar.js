@@ -12,7 +12,7 @@ const Navbar = () => {
           <Heading as={"span"} color={"white"}>Rec</Heading>
         </Heading>
       </ChakraLink>
-      <Text size={"xs"} display={{base:"none", sm:"inline"}}>ver 0.2.0</Text>
+      <Text size={"xs"} display={{base:"none", sm:"inline"}}>ver 0.2.1</Text>
 
       <Spacer />
 

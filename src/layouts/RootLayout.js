@@ -6,7 +6,6 @@ const RootLayout = () => {
   return ( 
     <Box className="root-layout" maxH={"100vh"} maxW={"100vw"}>
       <Navbar />
-
       <Box as="main">
         <Outlet />
       </Box>

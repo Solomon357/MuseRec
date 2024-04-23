@@ -12,6 +12,7 @@ const CircularAudio = ({ idnum, song, size, disabled }) => {
     const audio = document.getElementById(`player-${idnum}`);
     if(isPlaying) {
       audio.pause();
+      audio.currentTime = 0
     } else{
       audio.play();
     }
