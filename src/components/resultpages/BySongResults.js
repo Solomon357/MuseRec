@@ -18,8 +18,8 @@ const SongResults = () => {
   },[songs])
 
   //test
-  // console.log("below is recommended songs in a different component");
-  // console.log(songs);
+  //console.log("below is recommended songs in a different component");
+  //console.log(songs);
 
   return (
     <Box>
@@ -48,7 +48,8 @@ const SongResults = () => {
                   <Td>
                     {((song.preview_url) ?
                       <CircularAudio song={song.preview_url} idnum={song.id} size={"60px"} />
-                      : <CircularAudio disabled={true} size={"60px"} />
+                      : 
+                      <CircularAudio disabled={true} size={"60px"} href={song.external_urls.spotify} /> 
                     )}
                   </Td>
                 </Tr>

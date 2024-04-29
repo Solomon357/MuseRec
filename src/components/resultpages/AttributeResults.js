@@ -45,7 +45,7 @@ const AttributeResults = () => {
                   </Td>
                   <Td>{((song.preview_url) ?
                     <CircularAudio song={song.preview_url} idnum={song.id} size={"60px"} />
-                    : <CircularAudio disabled={true} size={"60px"}/>)}
+                    : <CircularAudio disabled={true} size={"60px"} href={song.external_urls.spotify}/>)}
                   </Td>
                 </Tr>
               ))}

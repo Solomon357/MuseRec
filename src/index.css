@@ -47,7 +47,7 @@ body {
   justify-content: center;
 	border-radius: 50%;
   background-color: rgba(227, 227, 227, 0.8);
-  text-decoration: line-through;
+  /* text-decoration: line-through; */
 }
 
 .play {

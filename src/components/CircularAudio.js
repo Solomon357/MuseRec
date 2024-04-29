@@ -1,10 +1,14 @@
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { CircularProgress, CircularProgressLabel, LinkBox, LinkOverlay } from "@chakra-ui/react";
 import { useState } from "react";
 import {ReactComponent as PlayIcon} from "../images/PlayIcon.svg"
 import {ReactComponent as PauseIcon} from "../images/PauseIcon.svg"
+import {ReactComponent as ExternalLinkIcon} from "../images/ExternalLinkIcon.svg"
+
+//External link is fine for now
+//import {ReactComponent as SpotifyIcon} from "../images/SpotifyIcon.svg"
 
 
-const CircularAudio = ({ idnum, song, size, disabled }) => {
+const CircularAudio = ({ idnum, song, size, disabled, href }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentDuration, setCurrentDuration] = useState(0);
 
@@ -29,14 +33,15 @@ const CircularAudio = ({ idnum, song, size, disabled }) => {
   return (
     <>
       { disabled ?
-        <CircularProgress color="grey" size={size}>
-          <CircularProgressLabel as="div" className="round-button-disabled" style={{width:"75%", height:"75%"}} >
-
-            <PauseIcon id="play-button" className="play-disabled" fill="grey"/> 
-            <div className="strikethrough"></div>  
-
-          </CircularProgressLabel>
-        </CircularProgress>
+        <LinkBox width={"fit-content"} height={"fit-content"} rounded={"25px"}>
+          <LinkOverlay href={href} isExternal>
+            <CircularProgress color="grey" size={size}>
+              <CircularProgressLabel as="div" className="round-button-disabled" style={{width:"75%", height:"75%"}} >
+                <ExternalLinkIcon id="play-button" className="play-disabled" fill="gray"/> 
+              </CircularProgressLabel>
+            </CircularProgress>
+          </LinkOverlay>
+        </LinkBox>
         :
         <>
           <audio id={`player-${idnum}`} src={song} onTimeUpdate={getCurrentProgress}></audio>

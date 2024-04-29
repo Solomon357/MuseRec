@@ -6,8 +6,7 @@ import MusicLogo from "../images/soundcloud_music_icon.png"
 const Homepage = () => {
 
   //TODO:
-  // see if theres a clean way to provide a link where preview doesn't exist
-  // prop validation via "npm install prop-types --save" 
+  // find a way to make sure only 1 circular audio is playing at a time
 
   const navigate = useNavigate();
 

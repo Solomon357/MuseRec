@@ -47,7 +47,7 @@ const BySongLayout = () => {
   //should be in its own separate file
   function CustomRadioGroup() {
     function CustomRadio(props) {
-      const { image, title, albumName, artistName, song_preview, id, ...radioProps } = props
+      const { image, title, albumName, artistName, song_preview, id, external_href, ...radioProps } = props
       const { state, getInputProps, getRadioProps, htmlProps, getLabelProps } =
         useRadio(radioProps)
         
@@ -81,7 +81,7 @@ const BySongLayout = () => {
               {song_preview ? 
                 <CircularAudio song={song_preview} idnum={id} />
                 : 
-                <CircularAudio disabled={true}/>
+                <CircularAudio disabled={true} href={external_href}/>
               }
             </HStack>
           </Flex>
@@ -124,6 +124,7 @@ const BySongLayout = () => {
                   artist.name + ((i !== track.artists.length-1) ? ', ' : '')
                 ))}
                 song_preview = {track.preview_url}
+                external_href = {track.external_urls.spotify}
                 
               />
             )
